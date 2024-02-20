@@ -1,15 +1,9 @@
-import numpy as np
 import pandas as pd
-import csv
-import re
-import os
-import seaborn as sns
-import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 import nltk
 from nltk.stem import WordNetLemmatizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import RandomForestClassifier
@@ -18,6 +12,7 @@ import pickle
 import sys
 
 def tokenize_and_lemmatize(text):
+    #Remove stop words
     text = text.encode('ascii', 'ignore').decode('ascii') 
     words = nltk.tokenize.WhitespaceTokenizer().tokenize(text)
     lemmatizer = WordNetLemmatizer()
