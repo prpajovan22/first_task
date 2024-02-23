@@ -1,23 +1,18 @@
 import pandas as pd
 import nltk
+from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import pickle
 import sys
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
 
 def tokenize_and_lemmatize(text):
-    # Remove stop words
-    text = text.encode('ascii', 'ignore').decode('ascii') 
+    stop_words = set(stopwords.words('english'))
+    text = text.encode('ascii', 'ignore').decode('ascii')
     words = nltk.tokenize.WhitespaceTokenizer().tokenize(text)
+    filtered_words = [word.lower() for word in words if word.lower() not in stop_words]
     lemmatizer = WordNetLemmatizer()
-    lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
-    return ' '.join(lemmatized_words).lower()
+    lemmatized_words = [lemmatizer.lemmatize(word) for word in filtered_words]
+    return ' '.join(lemmatized_words)
 
 def text_classification(context, model_choice, tokenize_lemmatize=False):
     if tokenize_lemmatize:
